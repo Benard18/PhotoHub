@@ -1,0 +1,19 @@
+{%include 'base.html'%}
+
+ {% block content %}
+
+ <div class="container">
+{% for category in categories %}
+   <div class="row">
+     <img src="{{category.image.url}}"  class="img-responsive" alt="">
+   </div>
+
+   <div class="row">
+     <h1 class="text-center">{{category.name}}</h1>
+     <h1>{{category.location}}</h1>
+   </div>
+
+   
+ </div>
+{%endfor%}
+ {% endblock %}

@@ -1,29 +1,88 @@
-{% include 'base.html'%}
-{%block content%}
+{%extends 'base.html'%}
+{% load static %}
+{% block content %}
+{{ block.super}}
 
-<div class="container">
+<script>
+  function myFunction() {
+    var copyText = document.getElementById("link");
+    copyText.select();
+    document.execCommand("Copy");
+    alert("Copied the text: " + copyText.value);
+  }
+</script>
 
-  <!-- Looping through news   -->
-  {% for item in images %}
+<div class="container-fluid" style='margin:0px;padding:0px;'>
+	<div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-ride="carousel">
+  <div class="carousel-inner">
+  	<div class="carousel-item active">
+  		<img class="img-responsive"  style='width:100%;height:550px;'src="https://2dhnizrxqvv1awj231eodql1-wpengine.netdna-ssl.com/wp-content/uploads/2016/04/BW_High_Street-Oman-1024x731.jpg" alt="First slide">
+  	</div>
+  	{% for category in categories %}
+    <div class="carousel-item">
+      <img class="img-responsive" style='width:100%;height:550px;' src="{{category.image.url}}" alt="{{category.id}}">
+    </div>
+    {% endfor%}
+  </div>
+</div>
 
-  <div class="row">
-    <!-- displaying News articles -->
-    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-      <h2 class="text-center"> {{ item.title }} </h2>
-      <img src='{{item.image.url}}' class='img-responsive'>
-      
-      <h1>{{item.category}}</h1>
-  
+  {% for image_item in images %}
+    <div class="col-md-4">
+      <div class="card">
+        <img class="img-responsive"  style='width:100%;'src="{{image_item.image.url}}" alt="image" data-toggle="modal" data-target="#{{image_item.id}}">
+        <div class="card-body">
+            <small class="card_text small-name">{{image_item.title}}</small>
+            <br>
+            <small class="card_text small-description">{{image_item.description}}</small>
+            <br>
+            <small class="card_text small-location">{{image_item.location}}</small>
+            <br>
+            <small class="card_text small-date">{{image_item.date}}</small>
+        </div>
+      </div>
     </div>
 
-  </div>
+    
 
+  </div>
   {% empty %}
   <div class="row">
-    <h2 class="text-center">There No News Items</h2>
+    <h2 class="text-center">There're No Images</h2>
   </div>
   {% endfor %}
 
-</div>
+  {% for image_item in images %}
 
-{%endblock%}
+  <!-- Modal -->
+  <div class="modal fade my_modal" id="{{image_item.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle">IMAGE</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" >
+          <img  class="img-responsive modal-image" style='width:100%;' src="{{image_item.image.url}}" alt="image">
+          <p><span class="modal-span">Name:</span> <br> {{image_item.title}}</p>
+          <br>
+          <p><span class="modal-span">Description:</span> <br> {{image_item.description}}</p>
+          <br>
+          <p><span class="modal-span">Location:</span> <br> {{image_item.location}}</p>
+          <br>
+          <p><span class="modal-span">Category:</span> <br> {{image_item.category}}</p>
+          <br>
+          <small><span class="modal-span">Date:</span> {{image_item.date}}</small>
+        </div>
+        <div class="modal-footer">
+          <input class="form-control" type="text" value="{{image_item.image.url}}" id="link">
+          <a onclick="myFunction()"><button type="button"  class="btn btn-primary">Copy Link</button></a>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

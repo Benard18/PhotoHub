@@ -26,14 +26,13 @@ SECRET_KEY = 'g&u)^n99m^p4t#+m=1bbye&unt^=4t3s_jqz0)9&=7w$0gp0)('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG',default=False,cast=bool)
 
-ALLOWED_HOSTS = []
 
 
 # Application definition
 
 INSTALLED_APPS = [
 	'hub.apps.HubConfig',
-	'bootstrap3',
+	'bootstrap4',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

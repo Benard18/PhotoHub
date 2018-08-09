@@ -6,8 +6,13 @@ def index(request):
 	date=dt.date.today()
 	images=Image.todays_images()
 	categories = Categorie.objects.all()
-	return render(request, 'index.html',{'images':images,'date':date, 'categories':categories})
+	return render(request, 'index.html',locals())
 
+def navbar(request):
+	date=dt.date.today()
+	categories = Categorie.objects.all()
+	locations = Location.objects.all()
+	return render(request,'navbar.html',{'locations':locations,'categories':categories})
 def search_results(request):
 	if 'image' in request.GET and request.GET["image"]:
 		search_term = request.GET.get("image")
